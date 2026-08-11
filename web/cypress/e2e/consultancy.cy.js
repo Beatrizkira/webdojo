@@ -16,6 +16,22 @@ describe('Formulário de Consultoria', () => {
          .parent()
          .find('select')
          .select('Individual')
-    })
+
+         //span[text()="Pessoa Física"]//
+         cy.contains('label', 'Pessoa Física')
+         .find('input')
+         .click()
+
+         cy.contains('label', 'Pessoa Jurídica')
+         .find('input')
+         .should('be.not.checked')
+
+         cy.contains('label', 'CPF')
+          .parent()
+          .find('input')
+          .type('71207448010')
+          .should('have.value', '712.074.480-10')
+        
 })
 
+})
