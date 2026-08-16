@@ -31,6 +31,28 @@ describe('Formulário de Consultoria', () => {
           .find('input')
           .type('71207448010')
           .should('have.value', '712.074.480-10')
+
+        const discoveryChannels = [
+            'Instagram',
+            'LinkedIn',
+            'Udemy',
+            'YouTube',
+            'Indicação de Amigo'
+        ]
+
+        discoveryChannels.forEach((channel)=>{
+            cy.contains('label', channel)
+             .find('input')
+             .check()
+             .should('be.checked')
+        })
+
+        cy.get('input[type="file"]')
+        .selectFile('../cypress/fixtures/doc.pdf', { force: true })
+
+        cy.get('textarea[placeholder="Descreva mais detalhes sobre sua necessidade"]')
+         .type('Preciso de ajuda com desenvolvimento web.')
+
         
 })
 
