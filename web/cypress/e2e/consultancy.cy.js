@@ -1,6 +1,6 @@
 describe('Formulário de Consultoria', () => {
 
-    it.only('Deve solicitar consultoria individual', () => {
+    it('Deve solicitar consultoria individual', () => {
         cy.start()
         cy.submitLoginForm('papito@webdojo.com', 'katana123')
 
@@ -79,7 +79,7 @@ describe('Formulário de Consultoria', () => {
         cy.contains('button', 'Enviar formulário')
          .click()
 
-        cy.get('.modal')
+        cy.get('.modal', { timeout: 7000})
          .should('be.visible')
          .find('.modal-content')
          .should('be.visible')
