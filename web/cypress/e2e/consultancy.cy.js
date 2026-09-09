@@ -1,13 +1,6 @@
 describe('Formulário de Consultoria', () => {
-
-    before(() => {
-        cy.log('Isso acontece antes de todos os testes uma única vez')
-    })
-
     beforeEach(() => {
-        cy.start()
-        cy.submitLoginForm('papito@webdojo.com', 'katana123')
-
+        cy.login()
          cy.goTo('Formulários', 'Consultoria')
     })
 
@@ -135,14 +128,5 @@ describe('Formulário de Consultoria', () => {
          .and('have.css', 'color', 'rgb(248, 113, 113)')
 
    })
-
-   afterEach(() => {
-        cy.log('Isso acontece depois de cada teste')
-    })
-
-    after(() => {
-        cy.log('Isso acontece depois de todos os testes uma única vez')
-    })
-
 
 })

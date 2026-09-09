@@ -1,4 +1,10 @@
 describe('Links abrindo nova guia/janela', () => {
+
+    beforeEach(()=> {
+        cy.login()
+    })
+
+    
     it('Validando o atributo do link do Instagram', () => {
         cy.start()
         cy.submitLoginForm('papito@webdojo.com', 'katana123')

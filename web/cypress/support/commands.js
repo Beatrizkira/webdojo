@@ -47,4 +47,11 @@ Cypress.Commands.add('submitLoginForm', (email, senha) => {
 
      cy.contains('h1', pageTitle)
         .should('be.visible')
-})
+
+ //helper
+  Cypress.Commands.add ('login', () => {
+      cy.start()
+        cy.submitLoginForm('papito@webdojo.com', 'katana123')
+    })
+
+  })
