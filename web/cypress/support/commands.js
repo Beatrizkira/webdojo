@@ -32,26 +32,21 @@ Cypress.Commands.add('start', () => {
 })
 
 Cypress.Commands.add('submitLoginForm', (email, senha) => {
-   
     cy.get('#email').type(email)
     cy.get('#password').type(senha)
-
     cy.contains('button', 'Entrar').click()
+})
 
-  })
-
-  Cypress.Commands.add('goTo', (buttonName, pageTitle) => {
-     cy.contains('button', buttonName)
-         .should('be.visible')
-         .click()
-
-     cy.contains('h1', pageTitle)
+Cypress.Commands.add('goTo', (buttonName, pageTitle) => {
+    cy.contains('button', buttonName)
         .should('be.visible')
+        .click()
 
- //helper
-  Cypress.Commands.add ('login', () => {
-      cy.start()
-        cy.submitLoginForm('papito@webdojo.com', 'katana123')
-    })
+    cy.contains('h1', pageTitle)
+        .should('be.visible')
+})
 
-  })
+Cypress.Commands.add('login', () => {
+    cy.start()
+    cy.submitLoginForm('papito@webdojo.com', 'katana123')
+})
