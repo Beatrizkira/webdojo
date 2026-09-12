@@ -1,0 +1,44 @@
+{
+  "personal": {
+    "name": "Fernando Papito",
+    "email": "papito@teste.com.br",
+    "phone": "(11) 99999-9999",
+    "consultancyType": "Individual",
+    "personType": "cpf",
+    "document": "71207448010",
+    "discoveryChannels": [
+      "Instagram",
+      "LinkedIn",
+      "Udemy",
+      "YouTube",
+      "Indicação de Amigo"
+    ],
+    "file": "../cypress/fixtures/doc.pdf",
+    "description": "Preciso de ajuda com desenvolvimento web.",
+    "techs": [
+      "Cypress",
+      "Selenium",
+      "WebDriverIO",
+      "Playwright",
+      "Robot Framework"
+    ],
+    "terms": true
+  },
+  "company": {
+    "name": "Fernando Papito",
+    "email": "papito@teste.com.br",
+    "phone": "(11) 99999-9999",
+    "consultancyType": "In Company",
+    "personType": "cnpj",
+    "document": "60176313000127",
+    "discoveryChannels": [
+      "LinkedIn"
+    ],
+    "file": "../cypress/fixtures/doc.pdf",
+    "description": "Preciso de ajuda com desenvolvimento web.",
+    "techs": [
+      "Cypress"
+    ],
+    "terms": true
+  }
+}
