@@ -13,4 +13,30 @@ describe ('Validações de Alertas em Javascript', () => {
 
         cy.contains('button', 'Mostrar Alert' ).click()
     })
+
+    it('Deve confirmar um dialogo e validar a resposta positiva', () => {
+       cy.on('window:confirm', (msg) => {
+         expect(msg).to.equal('Aperta um botão!')
+         return true;
+       })
+
+       cy.on('window:alert', (msg) => {
+         expect(msg).to.equal('Você clicou em Ok!')
+       })
+
+       cy.contains('button', 'Mostrar Confirm' ).click()
+    })
+
+    it('Deve cancelar um dialogo e validar a resposta negativa', () => {
+        cy.on('window:confirm', (msg) => {
+          expect(msg).to.equal('Aperta um botão!')
+          return false
+        })
+
+        cy.on('window:alert', (msg) => {
+          expect(msg).to.equal('Você cancelou!')
+        })
+
+        cy.contains('button', 'Mostrar Confirm').click()
+    })
 })
