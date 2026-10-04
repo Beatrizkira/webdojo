@@ -7,7 +7,7 @@ describe ('Validações de Alertas em Javascript', () => {
     it('Deve validar a mensagem de alerta', () => {
 
         cy.on('window:alert', (msg) => {
-             expect(msg).to.equal('Olá QA, eu sou uma Alert Box!')
+             expect(msg).to.equal('Olá QA, eu sou um Alert Box!')
         })
         cy.log('todo')
 
@@ -16,7 +16,7 @@ describe ('Validações de Alertas em Javascript', () => {
 
     it('Deve confirmar um dialogo e validar a resposta positiva', () => {
        cy.on('window:confirm', (msg) => {
-         expect(msg).to.equal('Aperta um botão!')
+         expect(msg).to.equal('Aperte um botão!')
          return true;
        })
 
@@ -29,7 +29,7 @@ describe ('Validações de Alertas em Javascript', () => {
 
     it('Deve cancelar um dialogo e validar a resposta negativa', () => {
         cy.on('window:confirm', (msg) => {
-          expect(msg).to.equal('Aperta um botão!')
+          expect(msg).to.equal('Aperte um botão!')
           return false
         })
 
@@ -40,9 +40,9 @@ describe ('Validações de Alertas em Javascript', () => {
         cy.contains('button', 'Mostrar Confirm').click()
     })
 
-    it.only('Deve interagir com um prompt, inserir um texto e validar uma mensagem', () => {
+    it('Deve interagir com um prompt, inserir um texto e validar uma mensagem', () => {
       cy.window().then((win) => {
-        cy.stub(win, 'prompt').returns('Olá! Fernando! Bem vindo ao webdojo!')
+        cy.stub(win, 'prompt').returns('Olá! Fernando! Boas-vindas ao webdojo!')
       })
     })
 })
