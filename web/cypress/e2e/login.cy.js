@@ -1,39 +1,43 @@
 describe('Login', ()=>{
   it ('Deve logar com sucesso', ()=> {
 
+    function getTodayDate() {
+      const today = new Date();
+      const day = String(today.getDate()).padStart(2, '0');
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const year = today.getFullYear();
 
-function getTodayDate() {
-  const today = new Date();
-  const day = String(today.getDate()).padStart(2, '0');
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const year = today.getFullYear();
-
-  return `${day}/${month}/${year}`;
-}
+      return `${day}/${month}/${year}`;
+    }
 
     cy.start()
     cy.submitLoginForm('papito@webdojo.com', 'katana123')
 
-//Não é legal utilizar classes de utilização , IDs são excelentes propriedades para utliza na automação de testes,
-//Copiar Xpath de inspencionar nãe é legal, o ideal é montar um Xpath// 
-// Cypress não tem suporte nativo para Xpath//
-
+    //Não é legal utilizar classes de utilização , IDs são excelentes propriedades para utliza na automação de testes,
+    //Copiar Xpath de inspencionar nãe é legal, o ideal é montar um Xpath//
+    // Cypress não tem suporte nativo para Xpath//
 
     cy.get('[data-cy="user-name"]')
-     .should('be.visible')
-     //Should é uma espectativa, ele mostra que precisa estar visivel//
-  // A gente pode pedir para o dev escrever o data.cy no código para criar uma propriedade para facilitar a automação de testes//
-   .and('have.text', 'Fernando Papito')
+      .should('be.visible')
+      //Should é uma espectativa, ele mostra que precisa estar visivel//
+      // A gente pode pedir para o dev escrever o data.cy no código para criar uma propriedade para facilitar a automação de testes//
+      .and('have.text', 'Fernando Papito')
 
-   cy.get('[data-cy="welcome-message"]')
-   .should('be.visible')
-   .and('have.text', 'Olá QA, esse é o seu Dojo para aprender Automação de Testes.')
+    cy.get('[data-cy="welcome-message"]')
+      .should('be.visible')
+      .and('have.text', 'Olá QA, esse é o seu Dojo para aprender Automação de Testes.')
 
-   cy.getCookie('login_date').should('exist')
+    cy.getCookie('login_date').should('exist')
 
-   cy.getCookie('login_date').should((cookie) => {
-    expect(cookie.value).to.eq(getTodayDate())
-   })
+    cy.getCookie('login_date').should((cookie) => {
+      expect(cookie.value).to.eq(getTodayDate())
+    })
+
+    cy.window().then((win) => {
+      const token = win.localStorage.getItem('token')
+      expect(token).to.not.be.null
+      expect(token).to.match(/^[a-fA-F0-9]{32}$/)
+    })
   })
 })
 
