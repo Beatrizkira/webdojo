@@ -1,39 +1,109 @@
-# 🥋 WebDojo
+# 🧪 Webdojo - Testes Automatizados E2E (Cypress)
 
-![WebDojo Cover](.github/cover.png)
+Este repositório contém a suíte de testes automatizados End-to-End (E2E) para a aplicação **Webdojo**, desenvolvida utilizando o framework [Cypress](https://www.cypress.io/).
 
-## 🚀 Sobre o Projeto
+---
 
-O **WebDojo** é um aplicativo exclusivo para os alunos do **Curso Ninja do Cypress**, ministrado pelo mestre **Fernando Papito**! 🥷💻 Ele foi criado para ser um **campo de treinamento prático**, onde os alunos podem aprimorar suas habilidades em automação de testes com desafios e exercícios focados no **Cypress**.
+## 📌 Pré-requisitos
 
-🛠️ Tecnologias Utilizadas
+Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas no seu ambiente de desenvolvimento:
 
-- [x] Git & GitHub 🌍 (Controle de versão e repositório remoto)
-- [x] Bash (Linha de Comando) 💻 (Execução de scripts e comandos)
-- [x] Visual Studio Code 🖥️ (Editor de código recomendado)
-- [x] Node.js (22+) 🟢 (Runtime JavaScript)
-- [x] Gerenciador de pacotes (npm ou yarn) 📦 (Dependências do projeto)
-- [x] Cypress 🧪 (Framework de testes end-to-end)
-- [x] Docker & Docker Compose 🐳 (Ambiente isolado para execução)
-- [x] PostgreSQL 🗄 (Banco de dados relacional)
-- [x] Use Bruno 🔌 (Cliente de API para testes de requisições)
+* [Node.js](https://nodejs.org/) (Versão recomendada: 18.x ou superior)
+* [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
+* Navegador suportado pelo Cypress (Google Chrome, Firefox, Edge ou Electron)
 
-## 📖 Como Usar
+---
 
-As instruções detalhadas de instalação e uso do **WebDojo** estão disponíveis dentro do **Curso Ninja do Cypress**.
+## 🚀 Instalação e Configuração
 
-🔗 **Acesse o curso e seja Ninja da Automação em Cypress!** 👉 [ninjadocypress.com.br](https://ninjadocypress.com.br)
+1. **Clone o repositório:**
+   ```bash
+   git clone <URL_DO_REPOSITORIO>
+   cd webdojo
+   ```
 
-## ⚠️ Contribuição
+2. **Instale as dependências do projeto:**
+   ```bash
+   npm install
+   ```
 
-O **WebDojo** é um ambiente **exclusivo** para os alunos do **Curso Ninja do Cypress**, e por isso, **não aceita contribuições externas**.
+---
 
-📢 Para suporte e dúvidas, utilize os canais oficiais do curso!
+## 🛠️ Executando a Aplicação e os Testes
 
-## 🔒 Licença
+Como a aplicação Webdojo reside no mesmo repositório, é necessário executar o servidor local antes ou simultaneamente à execução dos testes.
 
-Este projeto é **exclusivo para alunos** do **Curso Ninja do Cypress**. 🚫 O compartilhamento ou distribuição sem autorização é proibido.
+### 1. Iniciar a aplicação localmente
+Para subir o servidor local da aplicação Webdojo na porta 3000:
+```bash
+npm run dev
+```
+> **Nota:** Mantenha este terminal ativo para que a aplicação continue rodando em `http://localhost:3000`.
 
-------
+---
 
-💙 Feito com dedicação e muito café por **Fernando Papito** e a equipe do **Curso Ninja do Cypress**. 🚀🔥
+### 2. Executar os Testes Automatizados
+
+Abaixo estão os scripts de execução configurados no `package.json`:
+
+| Script | Descrição |
+| :--- | :--- |
+| `npm run dev` | Inicia o servidor local da aplicação em `http://localhost:3000`. |
+| `npm run test` | Executa **todos** os testes E2E em modo *headless* (viewport: 1440x900). |
+| `npm run teste:ui` | Abre a interface gráfica (*Test Runner*) do Cypress para execução interativa. |
+| `npm run test:login` | Executa apenas a suíte de **login** em desktop (`viewportWidth=1440, viewportHeight=900`). |
+| `npm run test:login:mobile` | Executa a suíte de **login** simulando ambiente **mobile** (`viewportWidth=375, viewportHeight=667`). |
+
+#### Exemplos de Execução:
+
+* **Modo Interativo (UI):**
+  ```bash
+  npm run teste:ui
+  ```
+
+* **Execução Headless Completa (Desktop):**
+  ```bash
+  npm run test
+  ```
+
+* **Execução Headless da funcionalidade de Login (Desktop):**
+  ```bash
+  npm run test:login
+  ```
+
+* **Execução Headless da funcionalidade de Login (Mobile):**
+  ```bash
+  npm run test:login:mobile
+  ```
+
+---
+
+## 📁 Estrutura do Projeto
+
+A estrutura de arquivos e pastas dentro de `cypress/` está organizada da seguinte maneira:
+
+```text
+web/
+└── cypress/
+    ├── e2e/                     # Arquivos de especificações de testes (.cy.js)
+    ├── fixtures/                # Dados estáticos/massa de dados para os testes (JSON, imagens, etc.)
+    └── support/                 # Arquivos de suporte, reuso e comandos customizados
+        ├── actions/             # Funções de ação reutilizáveis para fluxos de telas
+        │   ├── consultancy.actions.js
+        │   └── utils.js         # Métodos utilitários e rotinas auxiliares
+        ├── commands.js          # Comandos customizados do Cypress (Cypress.Commands.add)
+        └── e2e.js               # Arquivo global importado antes dos testes de e2e
+```
+
+### Detalhamento da Estrutura:
+* **`cypress/e2e/`**: Contém todos os cenários de teste automatizados da aplicação.
+* **`cypress/fixtures/`**: Armazena dados fixos em JSON ou arquivos mockados para interceptação de requisições de API e suporte aos testes.
+* **`cypress/support/actions/`**: Agrupa os arquivos de ações encapsuladas (métodos reutilizáveis) para manipulação dos componentes de tela.
+* **`cypress/support/commands.js`**: Utilizado para criar ou sobrescrever comandos nativos do Cypress (`cy.<comando>`).
+* **`cypress/support/e2e.js`**: Arquivo de inicialização global executado antes de cada especificação de teste.
+
+---
+
+## 📄 Licença
+
+Este projeto é de uso interno e educacional/profissional no contexto da aplicação Webdojo.
