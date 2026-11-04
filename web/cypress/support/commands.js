@@ -29,8 +29,12 @@ import'./actions/consultancy.actions'
 import {getTodayDate} from './actions/utils'
 
 Cypress.Commands.add('start', () => {
-    cy.viewport()
     cy.visit('/')
+})
+
+Cypress.Commands.add('goToSignup', () => {
+    cy.visit('/register')
+    cy.get('#name').should('be.visible')
 })
 
 Cypress.Commands.add('submitLoginForm', (email, senha) => {
@@ -68,4 +72,3 @@ Cypress.Commands.add('login', (ui = false) => {
 
     }
 })
-

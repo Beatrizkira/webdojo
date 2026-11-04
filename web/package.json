@@ -10,6 +10,8 @@
     "test:login:mobile": "npx cypress run --spec cypress/e2e/login.cy.js --config viewportWidth=375,viewportHeight=667"
   },
   "dependencies": {
+    "cords": "^1.0.4",
+    "cors": "^2.8.6",
     "cypress-real-events": "^1.15.0",
     "serve": "^14.2.4"
   },
