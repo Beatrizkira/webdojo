@@ -6,6 +6,10 @@ const { PrismaPg } = require('@prisma/adapter-pg');
 const { PrismaClient } = require('@prisma/client');
 
 const app = express();
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL is not configured');
+}
+
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 const port = 3333;
@@ -13,12 +17,21 @@ const port = 3333;
 app.use(cors());
 app.use(express.json());
 
+app.use((err, req, res, next) => {
+  console.log(err)
+
+  if(err instanceof SyntaxError) {
+    return res.status(400).json({ error: 'Invalid JSON format'})
+  }
+  next()
+})
+
 app.get('/', (req, res) => {
   res.json({ message: 'API do curso Hello Ninja do Cypress!' });
 });
 
 app.post('/api/users/register', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password } = req.body ?? {};
 
   if (!name) {
     return res.status(400).json({ error: 'Name is required' });
@@ -31,21 +44,21 @@ app.post('/api/users/register', async (req, res) => {
   }
 
   try {
-    // Verifica se o e-mail já está cadastrado
+    // Check if user already exists
     const userExists = await prisma.user.findUnique({
       where: { email },
     });
 
     if (userExists) {
-      return res.status(400).json({ error: 'Email já cadastrado' });
+      return res.status(409).json({ error: 'Email already registered' });
     }
 
-    // Cria o novo usuário no banco PostgreSQL
+    // Create new user record
     const user = await prisma.user.create({
       data: {
         name,
         email,
-        password, // Nota: Em produção, lembre-se de criptografar com bcrypt!
+        password,
       },
       select: {
         id: true,
@@ -56,15 +69,19 @@ app.post('/api/users/register', async (req, res) => {
     });
 
     return res.status(201).json({
-      mensagem: 'Usuário cadastrado com sucesso',
+      message: 'User registered successfully',
       user,
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'Erro interno ao cadastrar usuário' });
+    if (error.code === 'P2002') {
+      return res.status(409).json({ error: 'Email already registered' });
+    }
+
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`API listening on port ${port}`);
 });

@@ -33,6 +33,22 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas no se
 
 Como a aplicação Webdojo reside no mesmo repositório, é necessário executar o servidor local antes ou simultaneamente à execução dos testes.
 
+### API de cadastro de usuários
+
+Os testes da API dependem do PostgreSQL definido no `docker-compose.yaml`. Configure `DATABASE_URL` no `.env` da raiz para apontar para esse banco e, a partir da raiz do repositório, execute:
+
+```bash
+docker compose up -d db
+npx prisma db push
+npm --prefix api run dev
+```
+
+Em outro terminal, execute os testes da API:
+
+```bash
+npm --prefix api test
+```
+
 ### 1. Iniciar a aplicação localmente
 Para subir o servidor local da aplicação Webdojo na porta 3000:
 ```bash
