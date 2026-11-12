@@ -98,6 +98,44 @@ app.get('/api/users', async (req, res) => {
   }
 });
 
+app.put('/api/users/:id', async (req, res) => {
+  console.log(req.params.id)
+
+  const {id} = req.params
+
+  const {name, email, password} = req.body
+
+  if (!name) {
+    return res.status(400).json({ error: 'Name is required' });
+  }
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required' });
+  }
+  if (!password) {
+    return res.status(400).json({ error: 'Password is required' });
+  }
+
+  console.log(req.body)
+
+  try {
+    await prisma.user.update({
+      where: {id: Number (id)},
+      data: {
+        name,
+        email,
+        password
+      }
+    })
+     res.status(204).end()
+
+  } catch (error) {
+    res.status(500).json({error:'Error updating user :(' })
+  }
+ 
+
+  res.end()
+ });
+
 app.listen(port, () => {
   console.log(`API listening on port ${port}`);
 });

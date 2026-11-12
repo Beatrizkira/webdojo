@@ -40,7 +40,20 @@ describe('POST /api/users/register', () => {
     });
   });
 
-  it('Deve exigir o campo name', () => {
+ 
+   it('Não deve passar quando o JSON está mal formatado', () => {
+    const user = `{
+      name: 'Fernando Papito',
+      email: 'papito@teste.com.br',
+      password: 'pwd123'
+    }
+    `;
+   
+    cy.postUser(user).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.error).to.eq('Invalid JSON format');
+    });
+  }); it('Deve exigir o campo name', () => {
     cy.postUser({ email: 'wolverine@teste.com.br', password: 'pwd123' }).then(
       (response) => {
         expect(response.status).to.eq(400);
@@ -67,17 +80,4 @@ describe('POST /api/users/register', () => {
     );
   });
 
-   it('Não deve passar quando o JSON está mal formatado', () => {
-    const user = `{
-      name: 'Fernando Papito',
-      email: 'papito@teste.com.br',
-      password: 'pwd123'
-    }
-    `;
-   
-    cy.postUser(user).then((response) => {
-      expect(response.status).to.eq(400);
-      expect(response.body.error).to.eq('Invalid JSON format');
-    });
-  });
 });

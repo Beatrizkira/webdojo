@@ -39,10 +39,11 @@ before(() => {
         })
 
         heroes.forEach((hero) => {
-            response.body.find((user) => user.email === hero.email)
+            const found = response.body.find((user) => user.email === hero.email)
             expect(found.name).eq(hero.name)
             expect(found.email).to.eq(hero.email)
             expect(found).to.have.property('id')
         })
     })
 })
+
