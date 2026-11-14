@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: http://localhost:3333/api/users/register
+  url: http://localhost:3333/api/users/216
   body:
     type: json
     data: |-

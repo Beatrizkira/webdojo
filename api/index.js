@@ -99,11 +99,8 @@ app.get('/api/users', async (req, res) => {
 });
 
 app.put('/api/users/:id', async (req, res) => {
-  console.log(req.params.id)
-
-  const {id} = req.params
-
-  const {name, email, password} = req.body
+  const { id } = req.params;
+  const { name, email, password } = req.body ?? {};
 
   if (!name) {
     return res.status(400).json({ error: 'Name is required' });
@@ -115,26 +112,51 @@ app.put('/api/users/:id', async (req, res) => {
     return res.status(400).json({ error: 'Password is required' });
   }
 
-  console.log(req.body)
-
   try {
+    const user = await prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
     await prisma.user.update({
-      where: {id: Number (id)},
+      where: { id },
       data: {
         name,
         email,
-        password
-      }
-    })
-     res.status(204).end()
-
+        password,
+      },
+    });
+    return res.status(204).end();
   } catch (error) {
-    res.status(500).json({error:'Error updating user :(' })
-  }
- 
+    console.error(error);
+    if (error.code === 'P2002') {
+      return res.status(409).json({ error: 'Email already registered' });
+    }
 
-  res.end()
- });
+    return res.status(500).json({ error: 'Error updating user' });
+  }
+});
+
+app.delete('/api/users/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await prisma.user.findUnique({ where: { id } });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    await prisma.user.delete({ where: { id } });
+    return res.status(204).end();
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Failed to delete user' });
+  }
+});
 
 app.listen(port, () => {
   console.log(`API listening on port ${port}`);
